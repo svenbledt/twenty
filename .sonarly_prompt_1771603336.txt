@@ -1,0 +1,244 @@
+# Bug #4153: 
+
+## CRITICAL: Working Directory
+
+Your working directory is `/work/worktrees/twentyhq-twenty-wt-3038`. This is your primary repository (`twentyhq/twenty`).
+All edits MUST be performed within this directory.
+
+## Sentry Error Details (TOON format)
+
+Error information from Sentry (TOON = compact CSV-like format for lists):
+
+```
+event_info:
+  title: Error: Could not find cached related record
+  type: error
+  platform: javascript
+  culprit: /objects/leads
+  release: {'id': 1681682497; 'version': 'v1.18.1'; 'status': 'open'; 'shortVersion': 'v1.18.1'; 'versionInfo': {'package': None; 'version': {'raw': 'v1.18.1'}; 'description': 'v1.18.1'; 'buildHash': None}; 'ref...
+user:
+  id: bbcb94b3-eee4-4ccc-8b31-6e7d103daf84
+  email: pierry@getcyder.com
+  geo: country_code=CA, city=Toronto, region=Canada
+exceptions[1]{type,value,mechanism}:
+  Error,Could not find cached related record,handled=True
+stack_frames[10]:
+  [+] ../../src/modules/object-record/record-picker/multiple-record-picker/components/MultipleRecordPickerMenuItemContent.tsx:58:5
+      fn: handleSelectChange (module: src/modules/object-record/record-picker/multiple-record-picker/components/MultipleRecordPickerMenuItemContent)
+          59: recordId: searchRecord.recordId,
+          60: objectMetadataId: objectMetadataItem.id,
+          61: isSelected,
+          62: isMatchingSearchFilter: true,
+          63: });
+  [+] ../../src/modules/object-record/record-picker/multiple-record-picker/components/MultipleRecordPickerMenuItems.tsx:103:19
+      fn: <object>.onChange (module: src/modules/object-record/record-picker/multiple-record-picker/components/MultipleRecordPickerMenuItems)
+          104: }}
+          105: />
+          106: );
+          107: })}
+          108: <MultipleRecordPickerFetchMoreLoader />
+  [-] ../../../../node_modules/recoil/es/index.js:6137:12
+      fn: onChange (module: recoil/es/index)
+          6138: }, deps != null ? [...deps, storeRef] : undefined // eslint-disable-line fb-www/react-hooks-deps
+          6139: );
+          6140: }
+          6141: 
+          6142: var Recoil_useRecoilCallback = {
+  [-] ../../../../node_modules/recoil/es/index.js:6081:3
+      fn: recoilCallback (module: recoil/es/index)
+          6082: const errMsg = 'useRecoilCallback() expects a function that returns a function: ' + 'it accepts a function of the type (RecoilInterface) ...
+          6083: 
+          6084: if (typeof fn !== 'function') {
+          6085: throw Recoil_err(errMsg);
+          6086: } // Clone the snapshot lazily to avoid overhead if the callback does not use it.
+  [-] ../../../../node_modules/recoil/es/index.js:3466:3
+      fn: batchUpdates (module: recoil/es/index)
+          3467: let batchEnd = () => undefined;
+          3468: 
+          3469: try {
+          3470: batchEnd = batchStart$1();
+          3471: callback();
+  [-] ../../../../node_modules/react-dom/cjs/react-dom.production.min.js:273:42
+      fn: Qk (module: react-dom/cjs/react-dom.production)
+          274: function Kk(a,b){a.finishedWork=null;a.finishedLanes=0;var c=a.timeoutHandle;-1!==c&&(a.timeoutHandle=-1,Gf(c));if(null!==Y)for(c=Y.return;n ...
+          275: 0;b<fh.length;b++)if(c=fh[b],d=c.interleaved,null!==d){c.interleaved=null;var e=d.next,f=c.pending;if(null!==f){var g=f.next;f.next=e;d.next ...
+          276: function Mk(a,b){do{var c=Y;try{$g();Fh.current=Rh;if(Ih){for(var d=M.memoizedState;null!==d;){var e=d.queue;null!==e&&(e.pending=null);d=d. ...
+          277: m.lanes=r.lanes):(m.updateQueue=null,m.memoizedState=null)}var y=Ui(g);if(null!==y){y.flags&=-257;Vi(y,g,h,f,b);y.mode&1&&Si(f,l,b);b=y;k=l; ...
+          278: b&=-b;f.lanes|=b;var x=Ni(f,k,b);ph(f,x);break a;case 1:h=k;var w=f.type,u=f.stateNode;if(0===(f.flags&128)&&("function"===typeof w.getDeriv ...
+  [-] ../../../../node_modules/recoil/es/index.js:3471:7
+      fn: a (module: recoil/es/index)
+          3472: } finally {
+          3473: batchEnd();
+          3474: }
+          3475: });
+          3476: };
+  [-] ../../../../node_modules/recoil/es/index.js:6114:11
+      fn: callback (module: recoil/es/index)
+          6115: });
+          6116: !!(ret instanceof Sentinel) ? process.env.NODE_ENV !== "production" ? Recoil_invariant(false, 'batchUpdates should return immediately') :  ...
+          6117: 
+          6118: if (Recoil_isPromise(ret)) {
+          6119: ret = ret.finally(() => {
+  [+] ../../src/modules/object-record/record-field/ui/meta-types/input/hooks/useUpdateRelationOneToManyFieldInput.tsx:88:15
+      fn: callback (module: src/modules/object-record/record-field/ui/meta-types/input/hooks/useUpdateRelationOneToManyFieldInput)
+          89: sourceObjectNameSingular:
+          90: fieldDefinition.metadata.objectMetadataNameSingular,
+          91: targetObjectNameSingular:
+          92: fieldDefinition.metadata.relationObjectMetadataNameSingular,
+          93: targetGQLFieldName,
+  [+] ../../src/modules/object-record/hooks/useRecordOneToManyFieldAttachTargetRecord.ts:64:13
+      fn: <object>.recordOneToManyFieldAttachTargetRecord (module: src/modules/object-record/hooks/useRecordOneToManyFieldAttachTargetRecord)
+          65: }
+          66: 
+          67: const previousRecordId = cachedTargetRecord?.[`${targetGQLFieldName}Id`];
+          68: 
+          69: if (isDefined(previousRecordId)) {
+request:
+  url: https://cyder.twenty.com/objects/leads
+contexts:
+  browser: browser=Chrome 145.0.0; name=Chrome; version=145.0.0
+  device: family=Mac; model=Mac; brand=Apple
+  os: os=Mac OS X >=10.15.7; name=Mac OS X; version=>=10.15.7
+breadcrumbs_fetch[27]{ts,method,url,status}:
+  15:50:37,POST,https://cyder.twenty.com/graphql,200
+  15:50:37,POST,https://cyder.twenty.com/graphql,200
+  15:50:37,POST,https://cyder.twenty.com/graphql,200
+  15:50:39,POST,https://cyder.twenty.com/graphql,200
+  15:51:01,POST,https://cyder.twenty.com/graphql,200
+  15:51:01,POST,https://cyder.twenty.com/graphql,200
+  15:51:05,POST,https://cyder.twenty.com/graphql,200
+  15:51:05,POST,https://cyder.twenty.com/graphql,200
+  15:51:05,POST,https://cyder.twenty.com/graphql,200
+  15:51:05,POST,https://cyder.twenty.com/graphql,200
+  15:51:05,POST,https://cyder.twenty.com/graphql,200
+  15:51:16,POST,https://cyder.twenty.com/graphql,200
+  15:51:17,POST,https://cyder.twenty.com/graphql,200
+  15:51:17,POST,https://cyder.twenty.com/graphql,200
+  15:51:39,POST,https://cyder.twenty.com/graphql,
+  15:52:34,POST,https://cyder.twenty.com/graphql,200
+  15:52:37,POST,https://cyder.twenty.com/graphql,200
+  15:52:38,POST,https://cyder.twenty.com/graphql,200
+  15:52:38,POST,https://cyder.twenty.com/graphql,200
+  15:52:38,POST,https://cyder.twenty.com/graphql,200
+  15:52:38,POST,https://cyder.twenty.com/graphql,200
+  15:52:39,POST,https://cyder.twenty.com/graphql,200
+  15:52:41,POST,https://cyder.twenty.com/graphql,200
+  15:52:42,POST,https://cyder.twenty.com/graphql,200
+  15:52:42,POST,https://cyder.twenty.com/graphql,200
+  15:52:46,POST,https://cyder.twenty.com/graphql,200
+  15:53:01,POST,https://cyder.twenty.com/graphql,200
+breadcrumbs_ui.click[18]{ts,type,level,msg}:
+  15:51:00,default,i,div.css-145yef5 > div.css-1qxls6i > div.css-luzeug > button.css-1qvissl
+  15:51:07,default,i,div.css-1k5l5tl > div.css-18kzbsm > input#:r85:.css-1n50j6x
+  15:51:11,default,i,div.css-1k5l5tl > div.css-18kzbsm > input#:r85:.css-1n50j6x
+  15:51:15,default,i,div.css-9ercda > div.css-1wic6ei > div.css-k59gj9 > div.css-1es5jup
+  15:51:16,default,i,div.css-5048l6 > div.css-knopvr > div#title-id-1771602675994.s1a0c8w6
+  15:51:21,default,i,div.css-1k5l5tl > div.css-18kzbsm > input#:r8h:.css-1n50j6x
+  15:51:22,default,i,div.css-1es5jup > div.css-ra8lhm > div.css-1yt67n5 > div.css-ciy9u3
+  15:51:34,default,i,div.css-44gx6g > div.css-4uy5i5 > button.css-1wicbnq.ecxbnmf0 > svg
+  15:51:37,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-2tn0w1
+  15:51:38,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-2tn0w1
+  15:51:39,default,i,div.css-2g9rde > div.css-1etf3bn > div.css-3x10wt > div.css-blp8js
+  15:51:40,default,i,div.css-2g9rde > div.css-1etf3bn > div.css-3x10wt > div.css-blp8js
+  15:52:33,default,i,div.css-31krf0 > div > div.widget.css-5sx4du > div.css-r2fk2j
+  15:52:34,default,i,div.css-44gx6g > div.css-4uy5i5 > button.css-1wicbnq.ecxbnmf0 > svg
+  15:52:35,default,i,div.css-1te43ul.e4a7fms1 > div#title-id-1771602755547.s1a0c8w6
+  15:52:37,default,i,div.css-44gx6g > div.css-4uy5i5 > button.css-1wicbnq.ecxbnmf0 > svg
+  15:53:00,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-2tn0w1
+  15:53:03,default,i,div.css-1te43ul.e4a7fms1 > div#title-id-1771602782877.s1a0c8w6
+breadcrumbs_console[3]{ts,level,msg}:
+  15:51:05,w,Uncompiled message detected! Message:  > Close command menu  That means you use raw catalog or your ...
+  15:51:15,w,Warning: fragment with name LeadFragment already exists. graphql-tag enforces all fragment names acr...
+  15:52:35,w,Warning: fragment with name LeadFragment already exists. graphql-tag enforces all fragment names acr...
+breadcrumbs_ui.input[2]{ts,type,level,msg}:
+  15:51:11,default,i,div.css-1k5l5tl > div.css-18kzbsm > input#:r85:.css-1n50j6x
+  15:52:39,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-2tn0w1
+```
+
+## Severity Assessment
+
+After analyzing the bug, determine severity independently based on your analysis:
+- **critical**: User CANNOT complete a critical task. Crashes, core feature broken, data loss risk.
+- **medium**: User CAN complete tasks but degraded experience. Non-critical feature broken, workaround exists.
+- **low**: User unlikely to notice. Cosmetic, rare edge case, transient error that auto-recovers.
+
+Your severity assessment in the output JSON is the FINAL severity that will be used.
+## STRICT GIT RULES (violations = failed run)
+
+- You are already on the correct fix branch — do NOT run `git checkout`, `git switch`, or `git merge`
+- **NEVER run `git merge`** — merging other branches (feature branches, main, etc.) is FORBIDDEN
+- **NEVER run `git checkout` on a different branch** — stay on your current branch at all times
+- **NEVER run `git rebase`** — rebasing is not needed and can corrupt the worktree
+- If the code you need to fix is not on this branch, fix the code that IS on this branch
+  or report that the fix cannot be applied — do NOT merge or pull in other branches
+- **NEVER run `git add`, `git commit`, or `git push`** — the system handles all git write operations automatically after your analysis
+- Only allowed git commands: `git blame`, `git log`, `git diff`, `git show` (read-only)
+
+## Your Task (in this order)
+
+1. **Find the Root Cause**
+   - Locate the exact file and line where the bug originates
+   - Understand why this error occurs
+
+2. **Git Blame Analysis**
+   - Use `git blame` to find the commit that introduced this bug
+   - Note the commit SHA, author, and date
+
+3. **Fix the Bug**
+   - Implement a **minimal, targeted fix** — only change what's necessary to resolve this specific error
+   - **NEVER modify shared/generic utilities, base classes, or ORM internals** to work around a missing field or feature.
+     Instead, fix the specific code paths that trigger the error (e.g. add a guard/try-catch in the caller).
+     Changing a generic utility to silently skip errors is ALWAYS wrong — it masks future bugs.
+   - Do NOT refactor surrounding code, add new features, or make unrelated improvements
+   - Do NOT build new components, screens, or functionality — only fix the reported error
+   - Add appropriate error handling if needed
+   - Do NOT run any git write commands (`git add`, `git commit`, `git push`) — the system handles committing and pushing automatically after your analysis
+
+4. **Output Structured Analysis**
+   At the end of your response, output a JSON block between these markers:
+
+```
+SONARLY_ANALYSIS_START
+{
+  "title": "User-focused title (max 60 chars)",
+  "severity": "critical|medium|low",
+  "summary": "1-2 sentence summary of the bug",
+  "user_impact": "Who was impacted and how they were impacted",
+  "evidence": {  // Each code item: file (relative path from repo root), line (integer), snippet (faulty code, max ~10 lines). Multiple items for multiple files. {} if no evidence.
+    "code": [
+      {"file": "src/checkout/process.py", "line": 42, "snippet": "def process_order(order_id):\n    orders = db.query(\"SELECT * FROM orders\")  # missing WHERE clause"}
+    ]
+  },
+  "root_cause": {
+    "explanation": "Root cause explanation. Use plain text only — NO bold, italic, or code backticks. When listing multiple points, use a numbered list (1. 2. 3.) with each item on its own line. Include who introduced it (git blame author), when (date), and why.",
+    "blame": {
+      "commit_sha": "abc123def (the full commit SHA from git blame, or null if unknown)",
+      "author": "Author Name (from git blame output, or null if unknown)",
+      "date": "2026-01-15 (date from git blame, or null if unknown)",
+      "commit_url": "https://github.com/{owner}/{repo}/commit/{sha} (build from git remote get-url origin + sha, strip any access token, or null)",
+      "explanation": "Brief explanation of when/who introduced the bug (e.g. Added in commit abc123 by John on Jan 15)"
+    }
+  },
+  "suggested_fix": {
+    "explanation": "What the fix does and why it solves the problem. Use plain text only — NO bold, italic, or code backticks. When listing multiple steps, use a numbered list (1. 2. 3.) with each item on its own line.",
+    "files_changed": ["path/to/file.py", "path/to/other.py (list of file paths you created or modified in the fix)"]
+  }
+}
+SONARLY_ANALYSIS_END
+```
+
+CRITICAL: The JSON block is the ONLY part of your response shown to the user.
+Everything outside the SONARLY_ANALYSIS markers is discarded. Put ALL investigation details,
+evidence (code snippets and log lines), and findings INSIDE the JSON fields,
+especially root_cause.explanation, and summary. Do NOT write a separate investigation summary before the JSON.
+
+IMPORTANT: The JSON between SONARLY_ANALYSIS_START and SONARLY_ANALYSIS_END must be valid JSON.
+
+## Critical: ALWAYS output the analysis JSON
+
+You MUST output SONARLY_ANALYSIS_START...SONARLY_ANALYSIS_END even if you could not find the code or fix the bug.
+If you cannot locate the relevant code or create a fix,
+explain what you found in the `root_cause.explanation` field.
+A run without the analysis JSON is a FAILED run — never end without it.
+
+Don't ask any questions to the user
