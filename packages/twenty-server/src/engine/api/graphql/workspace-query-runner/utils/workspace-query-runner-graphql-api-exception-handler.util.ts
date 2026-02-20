@@ -18,6 +18,8 @@ import { PermissionsException } from 'src/engine/metadata-modules/permissions/pe
 import { permissionGraphqlApiExceptionHandler } from 'src/engine/metadata-modules/permissions/utils/permission-graphql-api-exception-handler.util';
 import { TwentyORMException } from 'src/engine/twenty-orm/exceptions/twenty-orm.exception';
 import { twentyORMGraphqlApiExceptionHandler } from 'src/engine/twenty-orm/utils/twenty-orm-graphql-api-exception-handler.util';
+import { WorkflowQueryValidationException } from 'src/modules/workflow/common/exceptions/workflow-query-validation.exception';
+import { workflowQueryValidationGraphqlApiExceptionHandler } from 'src/modules/workflow/common/utils/workflow-query-validation-graphql-api-exception-handler.util';
 
 interface QueryFailedErrorWithCode extends QueryFailedError {
   code: string;
@@ -45,6 +47,8 @@ export const workspaceQueryRunnerGraphqlApiExceptionHandler = (
       return apiKeyGraphqlApiExceptionHandler(error);
     case error instanceof ThrottlerException:
       return throttlerToGraphqlApiExceptionHandler(error);
+    case error instanceof WorkflowQueryValidationException:
+      return workflowQueryValidationGraphqlApiExceptionHandler(error);
     default:
       throw error;
   }

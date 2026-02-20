@@ -1,0 +1,187 @@
+# Bug #3892: 
+
+## CRITICAL: Working Directory
+
+Your working directory is `/work/worktrees/twentyhq-twenty-wt-2845`. This is your primary repository (`twentyhq/twenty`).
+All edits MUST be performed within this directory.
+
+## Sentry Error Details (TOON format)
+
+Error information from Sentry (TOON = compact CSV-like format for lists):
+
+```
+event_info:
+  title: Forbidden: Updating workflowVersion steps directly is forbidden. Use createWorkflowVersionStep; updateWorkflowVersionStep or deleteWorkflowVersionStep endpoint instead.
+  type: error
+  platform: node
+  culprit: Anonymous Operation
+  release: {'id': 1678867630; 'version': 'v1.18.0'; 'status': 'open'; 'shortVersion': 'v1.18.0'; 'versionInfo': {'package': None; 'version': {'raw': 'v1.18.0'}; 'description': 'v1.18.0'; 'buildHash': None}; 'ref...
+user:
+  ip_address: ::ffff:10.101.127.85
+exceptions[1]{type,value,mechanism}:
+  Forbidden,Updating workflowVersion steps directly is forbidden. Use createWorkflowVersionStep; updateWorkflowVersionStep or deleteWorkflowVersionStep endpoint instead.,handled=True
+stack_frames[10]:
+  [-] /app/node_modules/graphql-yoga/cjs/server.js:77:29
+      fn: YogaServer.handle (module: graphql-yoga.cjs:server)
+          80: request,
+          81: }, serverContext)))
+          82: : this.getResultForParams({
+          83: params: requestParserResult,
+          84: request,
+  [-] /app/node_modules/graphql-yoga/cjs/server.js:304:26
+      fn: YogaServer.getResultForParams (module: graphql-yoga.cjs:server)
+          307: });
+          308: this.logger.debug(`Processing GraphQL Parameters done.`);
+          309: }
+          310: return result;
+          311: }
+  [-] /app/node_modules/@envelop/core/cjs/orchestrator.js:383:27
+      fn: ? (module: @envelop.core.cjs:orchestrator)
+          386: }));
+          387: }
+          388: const onNextHandler = [];
+          389: const onEndHandler = [];
+          390: for (const afterCb of afterCalls) {
+  [+] ../../../../../../src/engine/api/graphql/workspace-resolver-builder/factories/update-one-resolver.factory.ts:42:24
+      fn: Object.updateWorkflowVersion (module: engine.api.graphql.workspace-resolver-builder.factories:update-one-resolver.factory)
+          43: { ...args, selectedFields },
+          44: resolverContext,
+          45: );
+          46: 
+          47: const typeORMObjectRecordsParser =
+  [+] ../../../../../src/engine/api/common/common-query-runners/common-base-query-runner.service.ts:141:11
+      fn: {CommonBaseQueryRunnerService#2}.execute (module: engine.api.common.common-query-runners:common-base-query-runner.service)
+          142: selectedFieldsResult,
+          143: } as CommonExtendedInput<Args>;
+          144: 
+          145: return this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+          146: async () =>
+  [+] ../../../../../src/engine/api/common/common-query-runners/common-base-query-runner.service.ts:202:8
+      fn: {CommonBaseQueryRunnerService#2}.processArgs (module: engine.api.common.common-query-runners:common-base-query-runner.service)
+          203: authContext,
+          204: flatObjectMetadata.nameSingular,
+          205: operationName,
+          206: computedArgs as WorkspacePreQueryHookPayload<CommonQueryNames>,
+          207: )) as CommonInput<Args>;
+  [+] ../../../../../../src/engine/api/graphql/workspace-query-runner/workspace-query-hook/workspace-query-hook.service.ts:42:27
+      fn: {WorkspaceQueryHookService#2}.executePreQueryHooks (module: engine.api.graphql.workspace-query-runner.workspace-query-hook:workspace-query-hook.service)
+          43: [authContext, objectName, payload],
+          44: preHookInstance.instance,
+          45: preHookInstance.host,
+          46: preHookInstance.isRequestScoped,
+          47: );
+  [+] ../../../../../src/modules/workflow/common/query-hooks/workflow-version-update-one.pre-query.hook.ts:29:5
+      fn: {WorkflowVersionUpdateOnePreQueryHook#2}.execute (module: modules.workflow.common.query-hooks:workflow-version-update-one.pre-query.hook)
+          30: {
+          31: workspaceId: workspace.id,
+          32: payload,
+          33: },
+          34: );
+  [-] node:internal/process/task_queues:103:5
+      fn: process.processTicksAndRejections (module: task_queues)
+  [+] ../../../../../src/modules/workflow/common/workspace-services/workflow-version-validation.workspace-service.ts:108:13
+      fn: {WorkflowVersionValidationWorkspaceService#2}.validateWorkfl... (module: modules.workflow.common.workspace-services:workflow-version-validation.workspace-service)
+          109: 'Updating workflowVersion steps directly is forbidden. ' +
+          110: 'Use createWorkflowVersionStep, updateWorkflowVersionStep or deleteWorkflowVersionStep endpoint instead.',
+          111: WorkflowQueryValidationExceptionCode.FORBIDDEN,
+          112: );
+          113: }
+request:
+  url: https://circlstdio.twenty.com/graphql
+  method: POST
+contexts:
+  app: app_start_time=2026-02-19T21:57:50.921Z; app_memory=4054528000; free_memory=90333184
+  browser: browser=Chrome 145; name=Chrome; version=145
+  device: arch=x64; memory_size=8102977536; free_memory=2181054464; boot_time=2025-12-04T16:12:15.291Z; processor_count=2; cpu_description=Intel(R) Xeon(R) Plat...
+  os: os=Alpine Linux 3.23.3 ; name=Alpine Linux; version=3.23.3 ; kernel_version=6.1.132-147.221.amzn2023.x86_64
+  runtime: runtime=node v24.13.1; name=node; version=v24.13.1
+breadcrumbs_console[2]{ts,level,msg}:
+  21:58:01,e,(node:1) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to error...
+  21:58:01,e,(node:1) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland al...
+breadcrumbs_http[1]{ts,type,level,msg}:
+  21:58:03,http,i,
+```
+
+## Severity Assessment
+
+After analyzing the bug, determine severity independently based on your analysis:
+- **critical**: User CANNOT complete a critical task. Crashes, core feature broken, data loss risk.
+- **medium**: User CAN complete tasks but degraded experience. Non-critical feature broken, workaround exists.
+- **low**: User unlikely to notice. Cosmetic, rare edge case, transient error that auto-recovers.
+
+Your severity assessment in the output JSON is the FINAL severity that will be used.
+## STRICT GIT RULES (violations = failed run)
+
+- You are already on the correct fix branch — do NOT run `git checkout`, `git switch`, or `git merge`
+- **NEVER run `git merge`** — merging other branches (feature branches, main, etc.) is FORBIDDEN
+- **NEVER run `git checkout` on a different branch** — stay on your current branch at all times
+- **NEVER run `git rebase`** — rebasing is not needed and can corrupt the worktree
+- If the code you need to fix is not on this branch, fix the code that IS on this branch
+  or report that the fix cannot be applied — do NOT merge or pull in other branches
+- **NEVER run `git add`, `git commit`, or `git push`** — the system handles all git write operations automatically after your analysis
+- Only allowed git commands: `git blame`, `git log`, `git diff`, `git show` (read-only)
+
+## Your Task (in this order)
+
+1. **Find the Root Cause**
+   - Locate the exact file and line where the bug originates
+   - Understand why this error occurs
+
+2. **Git Blame Analysis**
+   - Use `git blame` to find the commit that introduced this bug
+   - Note the commit SHA, author, and date
+
+3. **Fix the Bug**
+   - Implement a **minimal, targeted fix** — only change what's necessary to resolve this specific error
+   - **NEVER modify shared/generic utilities, base classes, or ORM internals** to work around a missing field or feature.
+     Instead, fix the specific code paths that trigger the error (e.g. add a guard/try-catch in the caller).
+     Changing a generic utility to silently skip errors is ALWAYS wrong — it masks future bugs.
+   - Do NOT refactor surrounding code, add new features, or make unrelated improvements
+   - Do NOT build new components, screens, or functionality — only fix the reported error
+   - Add appropriate error handling if needed
+   - Do NOT run any git write commands (`git add`, `git commit`, `git push`) — the system handles committing and pushing automatically after your analysis
+
+4. **Output Structured Analysis**
+   At the end of your response, output a JSON block between these markers:
+
+```
+SONARLY_ANALYSIS_START
+{
+  "title": "User-focused title (max 60 chars)",
+  "severity": "critical|medium|low",
+  "summary": "1-2 sentence summary of the bug",
+  "user_impact": "Who was impacted and how they were impacted",
+  "evidence": "Markdown string showing the faulty code. Put each snippet in a fenced code block with the language, and add the file path + line as a comment on the first line. Example:\n\n```python\n# src/checkout/process.py:42\ndef process_order(order_id):\n    orders = db.query(\"SELECT * FROM orders\")  # missing WHERE clause\n```\n\nInclude multiple code blocks if multiple files are involved. Empty string if no evidence.",
+  "root_cause": {
+    "explanation": "Root cause explanation. Use plain text only — NO bold, italic, or code backticks. When listing multiple points, use a numbered list (1. 2. 3.) with each item on its own line. Include who introduced it (git blame author), when (date), and why.",
+    "blame": {
+      "commit_sha": "abc123def (the full commit SHA from git blame, or null if unknown)",
+      "author": "Author Name (from git blame output, or null if unknown)",
+      "date": "2026-01-15 (date from git blame, or null if unknown)",
+      "commit_url": "https://github.com/{owner}/{repo}/commit/{sha} (build from git remote get-url origin + sha, strip any access token, or null)",
+      "explanation": "Brief explanation of when/who introduced the bug (e.g. Added in commit abc123 by John on Jan 15)"
+    }
+  },
+  "suggested_fix": {
+    "explanation": "What the fix does and why it solves the problem. Use plain text only — NO bold, italic, or code backticks. When listing multiple steps, use a numbered list (1. 2. 3.) with each item on its own line.",
+    "files_changed": ["path/to/file.py", "path/to/other.py (list of file paths you created or modified in the fix)"]
+  }
+}
+SONARLY_ANALYSIS_END
+```
+
+CRITICAL: The JSON block is the ONLY part of your response shown to the user.
+Everything outside the SONARLY_ANALYSIS markers is discarded. Put ALL investigation details,
+evidence (markdown with code blocks), and findings INSIDE the JSON fields,
+especially root_cause.explanation, and summary. Do NOT write a separate investigation summary before the JSON.
+
+IMPORTANT: The JSON between SONARLY_ANALYSIS_START and SONARLY_ANALYSIS_END must be valid JSON.
+
+## Critical: ALWAYS output the analysis JSON
+
+You MUST output SONARLY_ANALYSIS_START...SONARLY_ANALYSIS_END even if you could not find the code or fix the bug.
+If you cannot locate the relevant code or create a fix,
+explain what you found in the `root_cause.explanation` field.
+A run without the analysis JSON is a FAILED run — never end without it.
+
+Don't ask any questions to the user
